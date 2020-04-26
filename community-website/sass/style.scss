@@ -1,0 +1,95 @@
+$primary-color: #343434;
+
+.container {
+  margin: auto;
+  max-width: 800px;
+}
+
+.header{
+  text-align: center;
+}
+
+.signup-form, .login-form {
+  text-align: center;
+  line-height: 2;
+}
+
+.signup-form input, .login-form input{
+  width: 50%;
+}
+
+p {
+  font-color: $primary-color;
+}
+
+.todo-item{
+  // border: 2px solid black;
+}
+
+input[type="text"]::placeholder, input[type="password"]::placeholder {
+  /* Firefox, Chrome, Opera */
+  text-align: center;
+} 
+
+.nav-links {
+  display:flex
+}
+
+li:last-child {
+    justify-content: flex-end;
+}
+.nav-links > li {
+    flex: 1;
+    display: flex;
+}
+
+.app {
+  max-width:1000px;
+  margin:auto;
+}
+
+.divTable{
+	display: table;
+	width: 100%;
+}
+.divTableRow {
+	display: table-row;
+}
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+}
+.divTableCell, .divTableHead {
+	border: 1px solid #999999;
+	display: table-cell;
+	padding: 3px 10px;
+}
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+	font-weight: bold;
+}
+.divTableFoot {
+	background-color: #EEE;
+	display: table-footer-group;
+	font-weight: bold;
+}
+.divTableBody {
+	display: table-row-group;
+}
+.todo-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-gap: 25px;
+    list-style: none;
+}
+
+.main {
+  margin:25px;
+}
+
+#app {
+  max-width:1000px;
+  margin:auto;
+  margin-top:125px;
+}

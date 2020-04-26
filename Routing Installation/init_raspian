@@ -1,0 +1,90 @@
+#!/bin/sh
+
+########################################
+########################################
+###                                  ###
+###   RASPIAN ROUTER CONFIGURATION   ###
+###                                  ###
+########################################
+############################EMCEELAMB###
+
+if [[ $(/usr/bin/id -u) -ne 0 ]]; then
+    echo "Not running as root"
+    exit
+fi
+
+echo "Checking for dependencies..."
+
+HOSTAPD=$(which hostapd | grep hostapd)
+DNSMASQ=$(which dnsmasq | grep dnsmasq)
+IPTABLES=$(which iptables | grep iptables)
+
+if [  "$HOSTAPD" =  "" ];then
+	echo "Adding hostapd"
+  sudo apt install hostapd
+  sed "/^DAEMON_CONF/ { s/^#//; s%=.*%=\"/etc/hostapd/hostapd.conf\"%;  }" /etc/default/hostapd
+else
+  sudo killall hostapd
+fi
+
+if [  "$DNSMASQ" =  "" ];then
+	echo "Adding dnsmasq"
+  sudo apt install dnsmasq
+else
+  sudo killall dnsmasq
+fi
+
+if [  "$IPTABLES" =  "" ];then
+	echo "Adding adding iptables"
+  sudo apt install iptables
+  sudo apt install iptables-persistent
+fi
+
+echo "Moving config files..."
+
+sudo cp files/hostapd.conf /etc/hostapd/hostapd.conf
+sudo cp files/hostapd /etc/default/hostapd
+sudo cp files/dnsmasq.conf /etc/dnsmasq.conf
+sudo cp files/interfaces /etc/network/interfaces 
+sudo cp files/sysctl.conf /etc/sysctl.conf
+
+echo "Configure dns..."
+
+if [ -z "$(ps -e | grep dnsmasq)"  ]
+then
+  dnsmasq
+fi
+
+echo "Configure iptables..."
+
+iptables --flush
+iptables --table nat --flush
+iptables --delete-chain
+iptables --table nat --delete-chain
+iptables --table nat --append POSTROUTING --out-interface eth0 -j MASQUERADE
+iptables --append FORWARD --in-interface wlan0 -j ACCEPT
+
+sysctl -w net.ipv4.ip_forward=1
+
+##################################################
+############# SET UP THE NETWORK #################
+##################################################
+
+
+################## START WIFI ####################
+
+if [ "$(ip link | grep wlan0)" ]
+then
+  echo "Killing WiFi."
+  ifconfig wlan0 down
+  sleep 1s
+fi
+
+echo "Starting wifi."
+ifconfig wlan0 up 10.0.0.1 netmask 255.255.255.0
+sleep 2s
+
+echo "Starting wireless access point."
+hostapd /etc/hostapd/hostapd.conf 1> /dev/null
+ ~                                                                                                             
+ ~                                   

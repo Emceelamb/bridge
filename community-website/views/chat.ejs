@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Community Portal Chat</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <style>
+      body {
+        font-family: monospace;
+        color: white;
+        background: black;
+      }
+      #pTitle {
+        display: none;
+      }
+      #ascii {
+        width: 600px;
+        margin: auto;
+      }
+      #peers {
+        padding: 0;
+      }
+      .peerIp {
+        list-style: none;
+      }
+      .container {
+        width: 800px;
+        margin: auto;
+        background: rgba(100, 100, 100, 0.5);
+        padding: 50px;
+      }
+      .packet {
+        height: 50px;
+      }
+      .flex-container {
+        display: flex;
+        align-items: stretch;
+      }
+
+      .flex-item {
+        margin: 10px;
+        padding: 10px;
+        background: rgba(100, 100, 100, 0.5);
+        width: 50%;
+      }
+      /* DivTable.com */
+      .divTable {
+        display: table;
+        width: 100%;
+      }
+      .divTableRow {
+        display: table-row;
+        max-width: 400px;
+      }
+      .divTableHeading {
+        background-color: #eee;
+        display: table-header-group;
+      }
+      .divTableCell,
+      .divTableHead {
+        display: table-cell;
+        padding: 3px 10px;
+      }
+      .divTableHeading {
+        background-color: #eee;
+        display: table-header-group;
+        font-weight: bold;
+      }
+      .divTableFoot {
+        background-color: #eee;
+        display: table-footer-group;
+        font-weight: bold;
+      }
+      .divTableBody {
+        display: table-row-group;
+      }
+
+      #messages {
+        height: 200px;
+        overflow: auto;
+      }
+      .newMyMsg {
+        padding: 5px;
+        background-color: #a4fcbb;
+        border-radius: 10px;
+        max-width: 560px;
+        color: black;
+      }
+
+      .newOtherMsg {
+        padding: 5px;
+        background-color: #fffd82;
+        border-radius: 10px;
+        max-width: 560px;
+        color: black;
+      }
+    </style>
+    <script src="./js/socketio/socket.io.js"></script>
+    <link rel="stylesheet" href="./styles/main.css" />
+  </head>
+  <body>
+    <nav id="navBar">
+      <ul class="nav-links">
+        <li class="nav-item"><a href="/">Home</a></li>
+        <li class="nav-item"><a href="/tasks">Community Tasks</a></li>
+        <li class="nav-item">Message board</li>
+        <li class="nav-item"><a href="/chat">Chat</a></li>
+        <li class="nav-item"><a href="/members">Members</a></li>
+        <li className="nav-item">
+          <a href="/profile"><%= session.username %></a>
+        </li>
+        <li class="nav-item"><a href="/logout">Logout</a></li>
+      </ul>
+    </nav>
+    <div class="container">
+      <div><h1 id="pTitle">Network Listener</h1></div>
+      <pre id="ascii">
+         _______                              _             
+        (_______)                            (_)  _         
+        _       ___  ____  ____  _   _ ____  _ _| |_ _   _ 
+        | |     / _ \|    \|    \| | | |  _ \| (_   _) | | |
+        | |____| |_| | | | | | | | |_| | | | | | | |_| |_| |
+         \______)___/|_|_|_|_|_|_|____/|_| |_|_|  \__)\__  |
+                  ______                               
+                 (_____ \              _               
+                 _____) )___  _   _ _| |_ _____  ____ 
+                 |  __  // _ \| | | (_   _) ___ |/ ___)
+                 | |  \ \ |_| | |_| | | |_| ____| |    
+                 |_|   |_\___/|____/   \__)_____)_|    
+      </pre>
+      <div>
+        <div id="Address"></div>
+      </div>
+      <div class="flex-container">
+        <div class="flex-item">
+          <div class="peersList">
+            <h2>Peers</h2>
+            <ul id="peers"></ul>
+          </div>
+        </div>
+        <div class="flex-item">
+          <h2>Network Chat</h2>
+          <div id="messages"></div>
+          <input type="text" id="message" name="message" />
+          <input
+            type="submit"
+            value="submit"
+            onclick="sendmessage(document.getElementById('message').value)"
+          />
+        </div>
+      </div>
+    </div>
+    <script>
+      let socket = io();
+      socket.on("connect", function () {
+        socket.emit("my event", "Connected Device!");
+      });
+
+      socket.on("server response", function (res) {
+        $("#peers").empty();
+        let ips = res.split(",");
+        console.log(ips);
+        ips.forEach((ip) => {
+          ipAdd = ip.split(":");
+          $("#peers").append(
+            `
+      <li class="peerIp">${ipAdd[3]}</li>
+      `
+          );
+        });
+      });
+
+      socket.on("chatmessage", function (data) {
+        console.log(data);
+        //customize-> make line break, clear input
+        let otherMsg = document.getElementById("messages");
+        let newOtherMsg = document.createElement("p");
+        newOtherMsg.innerHTML = `${data}`;
+        newOtherMsg.classList.add("newOtherMsg");
+        otherMsg.appendChild(newOtherMsg);
+        // document.getElementById('message').value = ` `;
+        $("#messages").animate(
+          {
+            scrollTop: $("#messages").offset().top,
+          },
+          0
+        );
+      });
+      //get topic from server
+      socket.on("giveTopic", function (topic) {
+        console.log(topic);
+      });
+
+      var sendmessage = function (message) {
+        console.log("chatmessage: " + message);
+        socket.emit("chatmessage", message);
+        //customize-> make line break, clear input
+        let myMsg = document.getElementById("messages");
+        let newMyMsg = document.createElement("p");
+        newMyMsg.innerHTML = `${message}`;
+        newMyMsg.classList.add("newMyMsg");
+        myMsg.appendChild(newMyMsg);
+        document.getElementById("message").value = ` `;
+        $("#messages").animate(
+          {
+            scrollTop: $("#messages").offset().top,
+          },
+          0
+        );
+      };
+    </script>
+    <script src="./js/networklistener.js"></script>
+  </body>
+</html>

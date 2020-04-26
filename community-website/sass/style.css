@@ -1,0 +1,18 @@
+.container {
+  margin: auto;
+  width: 800px;
+}
+
+.header {
+  text-align: center;
+}
+
+.login-form {
+  text-align: center;
+}
+
+p {
+  font-color: #343434;
+}
+
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Profile</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./styles/main.css">
+  </head>
+  <script>
+    let username = "<%=session.username%>"
+  </script>
+  <body>
+    <nav id="navBar">
+      <ul class="nav-links">
+        <li class="nav-item"><a href="/">Home</a></li>
+        <li class="nav-item"><a href="/tasks">Community Tasks</a></li>
+        <li class="nav-item">Message board</li>
+        <li class="nav-item"><a href="/chat">Chat</a></li>
+        <li class="nav-item"><a href="/members">Members</a></li>
+        <li className="nav-item"><a href="/profile"><%= session.username %></a></li>
+        <li class="nav-item"><a href="/logout">Logout</a></li>
+      </ul>
+    </nav> 
+    <div id="app">
+      <header class="header">
+        <h1 class="header_title"> <%= session.name %> Tasks</h1>
+      </header>
+      <main class="main">
+        <h2>Add task</h2>
+        <form class="todo-form">
+          <input type="text" name="todo" placeholder="Add task" />
+          <input type="submit" value="add todo">
+        </form>
+        <h2>Task List</h2>
+        <section class="todo-list"></section>
+      </main>
+    </div>
+    <script src="./js/profile.js"></script>
+  </body>
+</html>
