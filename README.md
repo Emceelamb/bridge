@@ -1,6 +1,6 @@
 # Bridge to the Internet
 
-*Bridge to the Internet* creates a platform for localized network infrastructure to minimize resources required for networked communication to better serve their local communities during times of intermittent connection from limited network resources.
+*Bridge to the Internet* creates a platform for localized network infrastructure to minimize resources required for networked communication to better serve their local communities during times of intermittent connection.
 
 ![Bridge to the Internet logo](https://sandbox.markofthelam.com/img/bridge-logo.png)
 
