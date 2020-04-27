@@ -155,10 +155,11 @@ You can manually set the router as the proxy server on Firefox Browser. You will
 The Pi-Hole web dashboard can be viewed at:
 - `http://pi.hole:8080/admin` or `http://10.0.0.1:8080/admin`
 
+![Pi-Hole Dashboard](https://sandbox.markofthelam.com/img/piholedashboard.png)
+
 ### Squid Cache
 [Squid](http://www.squid-cache.org/) is a caching proxy for the Web supporting HTTP, HTTPS, FTP, and more. It reduces bandwidth and improves response times by caching and reusing frequently-requested web pages
 
-![Pi-Hole Dashboard](https://sandbox.markofthelam.com/img/piholedashboard.png)
 
 ## Acknowledgements
 - [Mimi Onuoha](https://github.com/MimiOnuoha/), Thesis Advisor
