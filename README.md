@@ -135,8 +135,8 @@ You can manually set the router as the proxy server on Firefox Browser. You will
   
 ### Mobile Devices
 #### IPhone
-1. Navigate WiFi Settings
-![WiFi Settings](https://sandbox.markoftelam.com/img/ios1.jpg)
+1. Navigate WiFi Settings  
+![WiFi Settings](https://sandbox.markofthelam.com/img/ios1.jpg)
 2. Select to Bridge WiFi options 
 ![Bridge Wifi Options IOS](https://sandbox.markofthelam.com/img/ios2.jpg)
 3. Select Configure Proxy
