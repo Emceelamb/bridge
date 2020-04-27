@@ -2,26 +2,44 @@
 
 *Bridge to the Internet* creates a platform for localized network infrastructure to minimize resources required for networked communication to better serve their local communities during times of intermittent connection from limited network resources.
 
+![Bridge to the Internet logo](https://sandbox.markofthelam.com/img/bridge-logo.png)
+
+## Table of Contents
+- [About](#about)
+- [Installation Instructions](#installation)
+- [Post Installation](#post-installation)
+- [Services](#services)
+- [Acknowledgements](#acknowledgements)
+
+## About
+
+Bridge to the Internet is a router which hosts robust local area communication applications which activates local area networks to strengthen connection within a local community. With the internet under heavy strain due to the COVID-19 pandemic it becomes clear that we must maximize our network resources and look for alternatives to internet based communication. This project is especially relevant for people in remote areas with impacted bandwidth. It creates more resilient communication channels. The use cases are endless, from wireless doorbell monitoring, to communicating to neighbors within a building, and - with additional wifi repeaters - potentially scaled to cover a city block.
+
+The router applies network infrastructure typically reserved for businesses and institutions into a single device. It can quickly set up an internet sharing wireless hot spot with an Proxy Web Server for caching and a DNS Sinkhole preconfigured as well as a local web server running an asynchronous  message board, and real time text chat.
+
 **Internal Web Links**:  
 - Community Website: `http://bridge` or `http://10.0.0.1`
 - Pi-Hole Dashboard: `http://pi.hole:8080/admin` or `http://10.0.0.1:8080/admin`
 
-## Pre-requisites
-- Raspberry Pi 3B+/ 4B (with on-board WiFi)
-- 8GB+ Micro SD card (C10 Preferred)
-- Ethernet Cable
-- Internet Modem/ Router
 
 ## Installation
 *Bridge* is a network router powered by Raspberry Pi that hosts a HTTP web proxy, DNS sinkhole, and web server for internal web pages. The router image comes pre-configured with Pi-Hole, a network ad-blocker, and Squid. To set up the router you must have the pre-requisite hardware and your build machine must have a Micro SD card reader as well as Balena Etcher to flash the router image.
 
+Instructions for:  
+* [Windows OS](#windows)
+* [Mac OS](#mac-os)
+* [Linux OS](#linux)
+
 ### Build Requirements
-- Pre-requisite materials
+- Raspberry Pi 3B+/ 4B (with on-board WiFi)
+- 8GB+ Micro SD card (C10 Preferred)
+- Ethernet Cable
 - [*Bridge* image](https://drive.google.com/open?id=1dwv18Lyx4Elu50rah06Jb-MrmHzcGZB5)
 - Internet connectivity
 - Micro SD card reader
 - [Balena Etcher](https://www.balena.io/etcher/)
 - SSH Client ([PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/) for Windows Build Machines, Linux and Mac OS will have a built-in SSH client)
+- Internet Modem/ Router
 
 ### Windows
 1. Download and install [Balena Etcher](https://www.balena.io/etcher/)
@@ -129,15 +147,20 @@ You can manually set the router as the proxy server on Firefox Browser. You will
 5. You should be now be sending requests to the Squid Proxy Server! This will speed up your internet as devices on the network will cache http here.
 ![Squid Cache Error Page](https://sandbox.markofthelam.com/img/squiderror.png)
   
-### Pi-Hole
+
+## Services
+### Pi Hole
 *Bridge WiFi* has Pi-Hole pre-configured. Pi-Hole is a DNS Sinkhole which acts as a network level ad-blocker. It greatly improves network speeds by re-directing malicious and advertisement dns requests. Please view the [Pi Hole Website](https://pi-hole.net/) for instructions for advanced configurations.
 
 The Pi-Hole web dashboard can be viewed at:
 - `http://pi.hole:8080/admin` or `http://10.0.0.1:8080/admin`
 
+### Squid Cache
+[Squid](http://www.squid-cache.org/) is a caching proxy for the Web supporting HTTP, HTTPS, FTP, and more. It reduces bandwidth and improves response times by caching and reusing frequently-requested web pages
+
 ![Pi-Hole Dashboard](https://sandbox.markofthelam.com/img/piholedashboard.png)
 
-## Thank you
+## Acknowledgements
 - [Mimi Onuoha](https://github.com/MimiOnuoha/), Thesis Advisor
 - [Alden Jones](https://github.com/miamiww), Thesis Resident
 - [Ellen Nickles](https://github.com/ellennickles), Thesis Resident
