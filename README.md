@@ -28,28 +28,30 @@ Ultimately, *Bridge to the Internet* seeks to educate about network infrastructu
 - [Squid](http://www.squid-cache.org)
 - [Pi-Hole](https://pi-hole.net/)
 - Local web server
+- Wireless access point with hostapd
+- DHCP Server with dnsmasq
 
 ## How It Works
 
 ![Router as a bridge cartoon](https://sandbox.markofthelam.com/img/router_853x480.gif)
 
-Bridge to the Internet uses Hostapd to create a wireless hotspot that forwards network traffic to the internet using the onboard Wi-Fi module. A wireless access point is automatically set up with the installation of the image and uses dnsmasq as a DHCP server. Internet access forwards traffic to the Ethernet port with iptables.
+*Bridge to the Internet* uses hostapd to create a wireless hotspot that forwards network traffic to the internet using the onboard Wi-Fi module. A wireless access point is automatically set up with the installation of the image and uses dnsmasq as a DHCP server. Internet access forwards traffic to the Ethernet port with iptables.
 
 ![Web cache server on bridge](https://sandbox.markofthelam.com/img/webcache_853x480.gif)
 
-To increase internet speeds on a network with limited bandwidth, the Bridge implements network infrastructure typically reserved for businesses and institutions. A web cache server is implemented with Squid, a Forward HTTP proxy. The web cache distributes resources at the network level so that all connected devices can experience a faster internet while minimizing the need for external web requests.
+To increase internet speeds on a network with limited bandwidth, the *Bridge* implements network infrastructure typically reserved for businesses and institutions. A web cache server is implemented with [Squid](http://www.squid-cache.org), a Forward HTTP proxy. The web cache distributes resources at the network level so that all connected devices can experience a faster internet while minimizing the need for external web requests.
 
 ![Dns sinkhole exploding as](https://sandbox.markofthelam.com/img/dns_853x480.gif)
 
-Bridge comes configured with Pi-Hole, a DNS sinkhole, that acts as a network ad-blocker where all connected clients benefit from the ad blocker. Network resources are further maximized as requests for advertisements are dropped.
+*Bridge* comes configured with [Pi-Hole](https://pi-hole.net/), a DNS sinkhole, that acts as a network ad-blocker where all connected clients benefit from the ad blocker. Network resources are further maximized as requests for advertisements are dropped.
 
 ![Intranet as a message board](https://sandbox.markofthelam.com/img/message-board_853x480.gif)
 
-Bridge hosts a local webserver with running a community task list for asynchronous communication and a real-time chat for synchronous communication. It provides alternative communication channels that do not depend on internet connectivity. The message boards allow for community organization and a way for network peers to be more connected.
+*Bridge* hosts a local webserver with running a community task list for asynchronous communication and a real-time chat for synchronous communication. It provides alternative communication channels that do not depend on internet connectivity. The message boards allow for community organization and a way for network peers to be more connected.
 
 ![Internet as an island](https://sandbox.markofthelam.com/img/island_853x_480.gif)
 
-Bridge wants to educate about network infrastructure and bring attention to the communities that are formed from the local area network infrastructure, and explore ways to share network resources to benefit all.
+*Bridge* wants to educate about network infrastructure and bring attention to the communities that are formed from the local area network infrastructure, and explore ways to share network resources to benefit all.
 
 ## Installation
 *Bridge* is a network router powered by Raspberry Pi that hosts a HTTP web proxy, DNS sinkhole, and web server for internal web pages. The router image comes pre-configured with Pi-Hole, a network ad-blocker, and Squid. To set up the router you must have the pre-requisite hardware and your build machine must have a Micro SD card reader as well as Balena Etcher to flash the router image.
