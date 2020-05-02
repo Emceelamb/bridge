@@ -2,10 +2,11 @@
 
 *Bridge to the Internet* creates a platform for localized network infrastructure to minimize resources required for networked communication to better serve their local communities during times of intermittent connection.
 
-![Bridge to the Internet logo](https://sandbox.markofthelam.com/img/bridge-logo.png)
+![Bridge to the Internet Logo](http://sandbox.markofthelam.com/img/titlecard_853x480.gif)
 
 ## Table of Contents
 - [About](#about)
+- [How It Works](#how-it-works)
 - [Installation Instructions](#installation)
 - [Post Installation](#post-installation)
 - [Services](#services)
@@ -13,14 +14,42 @@
 
 ## About
 
-Bridge to the Internet is a router which hosts robust local area communication applications which activates local area networks to strengthen connection within a local community. With the internet under heavy strain due to the COVID-19 pandemic it becomes clear that we must maximize our network resources and look for alternatives to internet based communication. This project is especially relevant for people in remote areas with impacted bandwidth. It creates more resilient communication channels. The use cases are endless, from wireless doorbell monitoring, to communicating to neighbors within a building, and - with additional wifi repeaters - potentially scaled to cover a city block.
+*Bridge to the Internet* is a router image that hosts network bandwidth saving services and robust local area communication applications that activate local area networks to strengthen connection within a local community. With the internet under heavy strain due to the COVID-19 pandemic, it becomes clear that we must maximize our network resources and look for alternatives to internet-based communication.
 
-The router applies network infrastructure typically reserved for businesses and institutions into a single device. It can quickly set up an internet sharing wireless hot spot with an Proxy Web Server for caching and a DNS Sinkhole preconfigured as well as a local web server running an asynchronous  message board, and real time text chat.
+It implements, in a single device, a wireless access point, a web-cache server, a DNS sinkhole server, and an intranet web server that hosting resilient communication applications to allow peers to communicate over Wi-Fi if direct communication is not possible and when the internet is inaccessible. The *Bridge* image is designed to be quickly and easily set up with a one-line configuration script for non-technical network administrators.  It is distributed as open-source software with detailed installation instructions for multiple build systems.
+
+Ultimately, *Bridge to the Internet* seeks to educate about network infrastructure and begin a conversation about the internet's role in local communities to reimagine the sharing of network resources.
 
 **Internal Web Links**:  
 - Community Website: `http://bridge` or `http://10.0.0.1`
 - Pi-Hole Dashboard: `http://pi.hole:8080/admin` or `http://10.0.0.1:8080/admin`
 
+### Included software:
+- [Squid](http://www.squid-cache.org)
+- [Pi-Hole](https://pi-hole.net/)
+- Local web server
+
+## How It Works
+
+![Router as a bridge cartoon](https://sandbox.markofthelam.com/img/router_853x480.gif)
+
+Bridge to the Internet uses Hostapd to create a wireless hotspot that forwards network traffic to the internet using the onboard Wi-Fi module. A wireless access point is automatically set up with the installation of the image and uses dnsmasq as a DHCP server. Internet access forwards traffic to the Ethernet port with iptables.
+
+![Web cache server on bridge](https://sandbox.markofthelam.com/img/webcache_853x480.gif)
+
+To increase internet speeds on a network with limited bandwidth, the Bridge implements network infrastructure typically reserved for businesses and institutions. A web cache server is implemented with Squid, a Forward HTTP proxy. The web cache distributes resources at the network level so that all connected devices can experience a faster internet while minimizing the need for external web requests.
+
+![Dns sinkhole exploding as](https://sandbox.markofthelam.com/img/dns_853x480.gif)
+
+Bridge comes configured with Pi-Hole, a DNS sinkhole, that acts as a network ad-blocker where all connected clients benefit from the ad blocker. Network resources are further maximized as requests for advertisements are dropped.
+
+![Intranet as a message board](https://sandbox.markofthelam.com/img/message-board_853x480.gif)
+
+Bridge hosts a local webserver with running a community task list for asynchronous communication and a real-time chat for synchronous communication. It provides alternative communication channels that do not depend on internet connectivity. The message boards allow for community organization and a way for network peers to be more connected.
+
+![Internet as an island](https://sandbox.markofthelam.com/img/island_853x_480.gif)
+
+Bridge wants to educate about network infrastructure and bring attention to the communities that are formed from the local area network infrastructure, and explore ways to share network resources to benefit all.
 
 ## Installation
 *Bridge* is a network router powered by Raspberry Pi that hosts a HTTP web proxy, DNS sinkhole, and web server for internal web pages. The router image comes pre-configured with Pi-Hole, a network ad-blocker, and Squid. To set up the router you must have the pre-requisite hardware and your build machine must have a Micro SD card reader as well as Balena Etcher to flash the router image.
@@ -40,6 +69,8 @@ Instructions for:
 - [Balena Etcher](https://www.balena.io/etcher/)
 - SSH Client ([PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/) for Windows Build Machines, Linux and Mac OS will have a built-in SSH client)
 - Internet Modem/ Router
+
+![Image of required materials](https://sandbox.markofthelam.com/img/bom.jpg)
 
 ### Windows
 1. Download and install [Balena Etcher](https://www.balena.io/etcher/)
