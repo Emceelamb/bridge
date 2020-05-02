@@ -16,7 +16,7 @@
 
 *Bridge to the Internet* is a router image that hosts network bandwidth saving services and robust local area communication applications that activate local area networks to strengthen connection within a local community. With the internet under heavy strain due to the COVID-19 pandemic, it becomes clear that we must maximize our network resources and look for alternatives to internet-based communication.
 
-It implements, in a single device, a wireless access point, a web-cache server, a DNS sinkhole server, and an intranet web server that hosting resilient communication applications to allow peers to communicate over Wi-Fi if direct communication is not possible and when the internet is inaccessible. The *Bridge* image is designed to be quickly and easily set up with a one-line configuration script for non-technical network administrators.  It is distributed as open-source software with detailed installation instructions for multiple build systems.
+It implements, in a single device, a wireless access point, a web-cache server, a DNS sinkhole server, and an intranet web server that hosts resilient communication applications that allow peers to communicate over Wi-Fi if direct communication is not possible and when the internet is inaccessible. The Bridge image is designed to be quickly and easily set up with a one-line configuration script for non-technical network administrators.  It is distributed as open-source software with detailed installation instructions for multiple build systems.
 
 Ultimately, *Bridge to the Internet* seeks to educate about network infrastructure and begin a conversation about the internet's role in local communities to reimagine the sharing of network resources.
 
@@ -54,7 +54,7 @@ To increase internet speeds on a network with limited bandwidth, the *Bridge* im
 *Bridge* wants to educate about network infrastructure and bring attention to the communities that are formed from the local area network infrastructure, and explore ways to share network resources to benefit all.
 
 ## Installation
-*Bridge* is a network router powered by Raspberry Pi that hosts a HTTP web proxy, DNS sinkhole, and web server for internal web pages. The router image comes pre-configured with Pi-Hole, a network ad-blocker, and Squid. To set up the router you must have the pre-requisite hardware and your build machine must have a Micro SD card reader as well as Balena Etcher to flash the router image.
+*Bridge* is distributed as a disk image for a Raspberry Pi, version 3B+/4B.  Its software is provided as open-source with detailed installation instructions for Windows, Mac OS, and Linux build machines. It requires minimal hardware to operate, using the onboard wifi to create a wireless access point. To provide internet sharing, the network needs an ethernet cable and internet modem or router.
 
 Instructions for:  
 * [Windows OS](#windows)
