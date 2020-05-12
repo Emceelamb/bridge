@@ -11,9 +11,8 @@
   <body>
     <nav id="navBar">
       <ul class="nav-links">
-        <li class="nav-item"><a href="/">Home</a></li>
+        <li class="nav-item"><a href="/"><img src="assets/bridgeicon.png" style="height:40px;" alt="Bridge Icon" /></a></li>
         <li class="nav-item"><a href="/tasks">Community Tasks</a></li>
-        <li class="nav-item">Message board</li>
         <li class="nav-item"><a href="/chat">Chat</a></li>
         <li class="nav-item"><a href="/members">Members</a></li>
         <li class="nav-item"><a href="/profile"><%= session.username %></a></li>
@@ -29,8 +28,9 @@
         <section class="todo-list"></section>
         <h2>Add tasks</h2>
         <form class="todo-form">
-          <input type="text" name="todo" placeholder="Add task" />
-          <input type="submit" value="add todo">
+          <textarea id="" name="todo" cols="30" rows="10"></textarea>
+          <br />
+          <input class="submit-button" type="submit" value="add todo" style="float:right;margin-top:10px;">
         </form>
       </main>
     </div>

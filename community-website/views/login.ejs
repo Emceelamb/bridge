@@ -6,26 +6,50 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./styles/main.css">
+    <style>
+      a { 
+        color: gray;
+        text-decoration: none;
+      }
+      a:hover {
+        color:black;
+      }
+
+      input{
+        padding-bottom:10px;
+      }
+    </style>
   </head>
-  <body>
+      <body style="background-color: #FAF3D2">
     <div id="app">
       <div class="container">
-        <div class="header">
-          <h1>Community Router Portal</h1>
-        </div>
-        <div class="login-form">
-          <p>
-            <form action="/login" method="POST">
-              <input type="text"  name="username" placeholder="Username" style="text-align: center;"><br />
-              <input type="password" name="password" placeholder="Password" style="text-align:center"><br />
-              <div>
-              <button type="submit"name="submit" value="Submit">Sign in </button>
-              <a href="/signup">Sign up</a>
-              </div>
-            </form>
-          </p>
+        <div class="login-page">
+          <div class="login-form">
+            <img style="width:100%" src="/assets/bridge-logo.png" alt="bridge to the internet logo" />
+            <p>
+              <form action="/login" method="POST">
+                <input type="text"  name="username" placeholder="Username" style="text-align: center;"><br />
+                <input type="password" name="password" placeholder="Password" style="text-align:center"><br />
+                  <div style="padding-top:15px">
+                <button type="submit"name="submit" value="Submit">Sign in </button>
+                <a href="/signup">Sign up</a>
+                </div>
+              </form>
+            </p>
+          </div>
+          <div class="info">
+            <p><i>Bridge to the Internet</i> creates a platform for localized network infrastructure to minimize bandwidth consumed for communication by sharing network resources to better serve their local communities.</p>
+
+            <p>Login to view <a href="/tasks">community tasks</a>, and <a href="chat">chat</a> with members of the <a href="/members">community</a>.</p>
+
+            <p>View the <a href="http://pi.hole:8080/admin">Pi-Hole Dashboard</a></p>
+
+            <p>Learn how to configure the <a href="/configuration">HTTP Proxy</a></p>
+          </div>
         </div>
       </div>
     </div>
   </body>
 </html>
+
+

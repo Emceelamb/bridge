@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Community Portal</title>
+        <meta name="description" content="">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="stylesheet" href="./styles/main.css">
+              <style>
+                a { 
+                  color: gray;
+                  text-decoration: none;
+                }
+                a:hover {
+                  color:black;
+                }
+
+                input{
+                  padding-bottom:10px;
+                }
+              </style>
+            </head>
+              <body style="background-color: #FAF3D2">
+                <div id="app">
+                  <div class="container">
+
+                    <h1>Web Cache Setup</h1>
+                    <p>To make use of Squid HTTP Web Cache you must configure your client devices to use the router as the HTTP Proxy. This enables Squid Cache to act as a proxy server allowing all connected to use the network cache server which will allow faster web requests for connected clients. It is optimal to configure the proxy in your system settings so that all applications running your device. The specific instructions will vary between operating systems.
+                    </p>
+                    <h2> Chrome/ Chromium Proxy Setup</h2>
+                    <p>
+                      Chromium uses your system proxy settings. When changed it will affect all applications on your machine.
+                    </p>
+                    <ol>
+                      <li>
+                        Open Chrome and open Preferences panel
+                      </li>
+                      <li>
+                        Navigate to Advanced > Systems page
+
+                      </li>
+                      <li>
+                        Manually configure proxy with the router IP address as your proxy server
+                        <br />
+                        - HTTP Proxy: `10.0.0.1`
+                        <br />
+                        - Port: `3128`
+                        <br />
+                        <img style="width:100%" src="https://sandbox.markofthelam.com/img/mac-systemsettings.png" alt="" />
+
+                      </li>
+                      <li>
+                        You can test the proxy server by running: <code>curl -x 10.0.0.1:3128 google.com</code> and if it returns the page your proxy works!
+                      </li>
+                      <li>
+                        You should be now be sending requests to the Squid Proxy Server! This will speed up your internet as devices on the network will cache http here.
+
+
+                      </li>
+                    </ol>
+
+                    <h2>Fire Fox Proxy Setup</h2>
+
+                    <p>
+                      You can manually set the router as the proxy server on Firefox Browser. You will do this in the browser's preferences page.
+                    </p>
+
+
+                    <ol>
+                      <li>
+                        Open Firefox Browser and go to Preferences panel
+                      </li>
+                      <li>
+                        Navigate to Network Settings and select *settings*
+                      </li>
+                      <li>
+                        Select Manual Proxy Configuration and set:
+                        <br />
+
+                        - HTTP Proxy: `10.0.0.1`
+                        <br />
+
+                        - Port: `3128`
+                      </li>
+                      <li>
+                        You can test the proxy server by running: <code>curl -x 10.0.0.1:3128 google.com</code> and if it returns the page your proxy works!
+                      </li>
+                      <li>
+                        You should be now be sending requests to the Squid Proxy Server! This will speed up your internet as devices on the network will cache http here.
+                        <br />
+                        <img style="width:100%" src="https://sandbox.markofthelam.com/img/squiderror.png)" alt="" />
+                      </li>
+                    </ol>
+
+                    <h2>Iphone</h2>
+                    <ol>
+                      <li>
+                      Navigate WiFi Settings
+
+                      <br />
+                      <img style="width:100%" src="https://sandbox.markofthelam.com/img/ios1.jpg" style="width:100%" alt="" />
+
+                      </li>
+                      <li>
+                        Select to Bridge WiFi options
+                        <br />
+                        <img src="https://sandbox.markofthelam.com/img/ios2.jpg" style="width:100%" alt="" />
+
+                      </li>
+                      <li>
+                        Select Configure Proxy
+                      </li>
+                      <li>
+                        Enable Manual Proxy
+                        <br />
+
+
+                        - Server: `10.0.0.1`
+                        <br />
+
+                        - Port: `3128`
+                      </li>
+                      <li>
+                        You can test the proxy server by running: <code>curl -x 10.0.0.1:3128 google.com</code> and if it returns the page your proxy works!
+                      </li>
+                      <li>
+                        You should be now be sending requests to the Squid Proxy Server! This will speed up your internet as devices on the network will cache http here.
+                      </li>
+                      </ol>
+        </div>
+    </div>
+  </body>
+  </html>
+
+

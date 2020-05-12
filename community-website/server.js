@@ -2,17 +2,16 @@ const fs           = require('fs'),
       path         = require('path'),
       express      = require('express'),
       app          = express(),
-      config       = require('./config'),
       uuidV1       = require('uuid/v1'),
       cookieParser = require('cookie-parser'),
       bodyParser   = require('body-parser'),
       server       = require('http').createServer(app),
       io           = require('socket.io')(server);
 
-
 let clientList = [];
+let clientListStore = []
 
-const PORT = config.PORT;
+const PORT = 80;
 const publicURL = path.resolve(`${__dirname}/public`);
 
 app.use(express.static(publicURL));
@@ -25,7 +24,6 @@ const nedbstore = require('nedb-session-store')(session);
 const todo_db = new Datastore({filename: 'todos', autoload: true});
 
 app.use(express.json());
-
 app.use(cookieParser());
 
 app.use(
@@ -90,6 +88,10 @@ app.get('/profile', function(req, res) {
     res.render(path.resolve(__dirname + "/views/profile.ejs"), req)
   }
 });
+
+app.get('/configuration', function(req, res){
+  res.render(path.resolve(__dirname+"/views/configuration.ejs"))
+})
 
 app.get('/logout', (req, res) =>{
   delete req.session.username;
@@ -157,7 +159,6 @@ app.post("/api/v1/members", async (req, res) => {
       console.log("User exists!")
       }
     })
-
   } catch (error) {
     console.error(error);
     res.json(error);
@@ -280,19 +281,28 @@ function checkPassword(password){
 
 io.on('connection', (socket) => {
   console.log('Connection was made!')
-  var address = socket.handshake.address;
-  io.emit('server response', `${address}`)
+  var address ;
 
-  clientList.push(address);
-
+  console.log(session.username, "sessi")
+  socket.on('send name', (name)=>{
+    console.log(name, "name")
+    address=name;
+    let internalList = {"name": name, "id":socket.id}
+    clientList.push(address);
+    clientListStore.push(internalList)
   clientList = [...new Set(clientList)];
+  clientListStore = [...new Set(clientListStore)];
   io.emit('server response', `${clientList}`);
+  })
+  //io.emit('server response', `${address}`)
+
 
   console.log("We have a new client: " + socket.id);
   // When this user emits, client side: socket.emit('otherevent',some data);
   socket.on('chatmessage', function (data) {
  // Data comes in as whatever was sent, including objects
   console.log("Received: 'chatmessage' " + data);
+    console.log("what is the data: ", data)
   
 // Send it to all of the clients
   socket.broadcast.emit('chatmessage', data);
@@ -300,13 +310,30 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () =>{
     clientList = [...new Set(clientList)];
-    let index = clientList.indexOf(socket.handshake.address);
-    console.log(clientList, index, "haha");
+    clientListStore = [...new Set(clientListStore)];
+    console.log(clientListStore)
+    // let index = clientListStore.indexOf(socket.id);
+    let index = findWithAttr(clientListStore, 'id', socket.id)
+    console.log(clientListStore, index, "index");
     if(index > -1){
-      clientList.splice(index, 1);
-      io.emit('server response', `${clientList}`);
-      
+      let newList =[]
+      clientListStore.splice(index, 1);
+      clientListStore.forEach((client)=>{
+        newList.push(client.name)
+      })
+      io.emit('server response', `${newList}`);
     }
     console.log(`${socket.id} disconnected.`)
   });
 });
+
+
+function findWithAttr(array, attr, value) {
+  for(var i = 0; i < array.length; i += 1) {
+    if(array[i][attr] === value) {
+                  return i;
+    }
+  }
+      return -1;
+}
+

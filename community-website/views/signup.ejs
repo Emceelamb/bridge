@@ -6,12 +6,23 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./styles/main.css">
-    </script>
+    <style>
+      a { 
+        color:grey;
+        text-decoration:none;
+      }
+      a:hover {
+        color:black;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
     <div id="app">
       <header class="header">
+        <div>
+          <img src="assets/bridge-logo.png" alt="Bridge logo" style="width:50%"/>
+        </div>
         <h1>Signup</h1>
       </header>
       <main >
@@ -21,6 +32,8 @@
           <input type="text" name="name" style="text-align: center;" placeholder="Name"/><br />
           <input type="text" name="id" style="text-align: center;" placeholder="Affiliation" /><br />
           <input type="password" name="password" style="text-align: center;" placeholder="Password"><br />
+            <br />
+            
             <button type="submit"name="submit" value="Submit" onclick="window.location='/'">Sign up</button><br/>
           <a href="/">Login</a>
         </form>

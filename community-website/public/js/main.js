@@ -24,7 +24,6 @@ class Todos {
 
     for(var item of this.todos){
       if(item.status=="incomplete"){incomplete.push(item)}
-      console.log(incomplete.length, "length of in")
       if(incomplete.length == 6)break
 
     }
@@ -125,25 +124,46 @@ class Todos {
     this.todos.forEach(item =>{
       this.$todos.innerHTML += `
       <li class="todo-item" id="${item._id}">
+        <p class="todo-name" name="user" >${item.user}</p>
+        <p class="todo-date" name="date">${item.date}</p>
         <form class="todo-item__form">
-          <p>${item.todo}</p>
-          <select name="status">
-            <option value="incomplete" ${item.status === "incomplete" ? 'selected' : ''}>incomplete</option>
-            <option value="complete" ${item.status === "complete" ? 'selected' : ''}>complete</option>
-          </select>
-        <p name="user" >${item.user}</p>
-        <p name="date">${item.date}</p>
+          <textarea id="" name="todo" cols="30" rows="10">${item.todo}</textarea>
+          <label class="switch" name="status">
+            <input type="checkbox" ${item.status==="complete" ? 'checked' : 'true'} class="todo-toggle">
+            <span class="slider round"></span>
+          </label> ${item.status}
         </form>
-        <button class="todo-item__delete">delete</button> | <button class="todo-item__edit">edit</button>
+        <button style="width:100%;margin-top:10px;float:right;"class="todo-item__edit">Change Status</button>
       </li>
       `;
     });
     document.querySelectorAll('.todo-item').forEach(item =>{
       item.addEventListener('click', this.handleEditOrDelete.bind(this));
     });
+    // document.querySelectorAll('.todo-toggle').forEach(item =>{
+    //   item.addEventListener('click', this.toggleStatus.bind(this));
+    // });
   }
 
+  async toggleStatus(evt){
+    let itemId = evt.target.parentElement.parentElement.parentElement.id
+    let listItem = evt.target.parentElement.parentElement;
+    let status;
+    if (evt.target.checked){
+      status="complete";
+    } else {
+      status="incomplete";
+    }
+    console.log(evt.target.checked)
+    const updateData = {
+      todo: listItem.children[0].value,
+      status: status,
+      user: listItem.children[0].innerHTML,
+      date: listItem.children[1].innerHTML,
+    };
 
+    await this.updateTodo(itemId, updateData);
+  }
   async handleEditOrDelete(evt) {
     {
       const $clickedButton = evt.target;
@@ -153,20 +173,28 @@ class Todos {
         await this.deleteTodo($listItem.id);
         console.log('delete', $listItem, $listItem.id);
       } else if ($clickedButton.classList.contains('todo-item__edit')) {
-        const form = $listItem.firstElementChild;
-        console.log(form.children[0].innerHTML)
-
+        const form = $listItem.children[2];
+        // console.log(form, "form")
+        // console.log($listItem.children[0].innerHTML, "list")
+        let status;
+        if (form.children[1].children[0].checked){
+          status="complete";
+        } else {
+          status="incomplete";
+        }
         const updateData = {
-          todo: form.children[0].innerHTML,
-          status: form.status.value,
-          user: form.children[2].innerHTML,
-          date: form.children[3].innerHTML,
+          todo: form.todo.value,
+          status: status,
+          user: $listItem.children[0].innerHTML,
+          date: $listItem.children[1].innerHTML,
         };
+        console.log(updateData)
         await this.updateTodo($listItem.id, updateData);
       }
     }
   }
 }
+
 
 window.addEventListener('DOMContentLoaded', async () =>{
   const todos = new Todos();

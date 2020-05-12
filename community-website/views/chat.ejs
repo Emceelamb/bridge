@@ -4,7 +4,7 @@
     <title>Community Portal Chat</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=, initial-scale=1.0" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/jquery-3.5.0.min.js "></script>
     <style>
       body {
         font-family: monospace;
@@ -12,11 +12,7 @@
         background: black;
       }
       #pTitle {
-        display: none;
-      }
-      #ascii {
-        width: 600px;
-        margin: auto;
+        color:black;
       }
       #peers {
         padding: 0;
@@ -25,9 +21,7 @@
         list-style: none;
       }
       .container {
-        width: 800px;
         margin: auto;
-        background: rgba(100, 100, 100, 0.5);
         padding: 50px;
       }
       .packet {
@@ -38,11 +32,16 @@
         align-items: stretch;
       }
 
+      button#msgButton {
+        height: 30px;
+      }
+
       .flex-item {
         margin: 10px;
         padding: 10px;
         background: rgba(100, 100, 100, 0.5);
         width: 50%;
+        flex:1;
       }
       /* DivTable.com */
       .divTable {
@@ -95,40 +94,27 @@
         max-width: 560px;
         color: black;
       }
+
     </style>
     <script src="./js/socketio/socket.io.js"></script>
     <link rel="stylesheet" href="./styles/main.css" />
   </head>
+
   <body>
     <nav id="navBar">
       <ul class="nav-links">
-        <li class="nav-item"><a href="/">Home</a></li>
+        <li class="nav-item"><a href="/"><img src="assets/bridgeicon.png" style="height:40px;" alt="Bridge Icon" /></a></li>
         <li class="nav-item"><a href="/tasks">Community Tasks</a></li>
-        <li class="nav-item">Message board</li>
         <li class="nav-item"><a href="/chat">Chat</a></li>
         <li class="nav-item"><a href="/members">Members</a></li>
-        <li className="nav-item">
+        <li class="nav-item">
           <a href="/profile"><%= session.username %></a>
         </li>
         <li class="nav-item"><a href="/logout">Logout</a></li>
       </ul>
     </nav>
     <div class="container">
-      <div><h1 id="pTitle">Network Listener</h1></div>
-      <pre id="ascii">
-         _______                              _             
-        (_______)                            (_)  _         
-        _       ___  ____  ____  _   _ ____  _ _| |_ _   _ 
-        | |     / _ \|    \|    \| | | |  _ \| (_   _) | | |
-        | |____| |_| | | | | | | | |_| | | | | | | |_| |_| |
-         \______)___/|_|_|_|_|_|_|____/|_| |_|_|  \__)\__  |
-                  ______                               
-                 (_____ \              _               
-                 _____) )___  _   _ _| |_ _____  ____ 
-                 |  __  // _ \| | | (_   _) ___ |/ ___)
-                 | |  \ \ |_| | |_| | | |_| ____| |    
-                 |_|   |_\___/|____/   \__)_____)_|    
-      </pre>
+      <div><h1 id="pTitle">Local Chat</h1></div>
       <div>
         <div id="Address"></div>
       </div>
@@ -136,43 +122,39 @@
         <div class="flex-item">
           <div class="peersList">
             <h2>Peers</h2>
-            <ul id="peers"></ul>
+            <ul id="membs"></ul>
           </div>
         </div>
         <div class="flex-item">
           <h2>Network Chat</h2>
           <div id="messages"></div>
           <input type="text" id="message" name="message" />
-          <input
+          <button
+            id = "msgButton"
             type="submit"
             value="submit"
             onclick="sendmessage(document.getElementById('message').value)"
-          />
+          >Send</button>
         </div>
       </div>
     </div>
     <script>
+      var name = "<%= session.username %>"
       let socket = io();
       socket.on("connect", function () {
-        socket.emit("my event", "Connected Device!");
+        socket.emit("send name", name)
       });
 
       socket.on("server response", function (res) {
-        $("#peers").empty();
+        $("#membs").empty();
+
         let ips = res.split(",");
-        console.log(ips);
-        ips.forEach((ip) => {
-          ipAdd = ip.split(":");
-          $("#peers").append(
-            `
-      <li class="peerIp">${ipAdd[3]}</li>
-      `
-          );
-        });
+       ips.forEach((ip) => {
+         $("#membs").append(`<li>${ip}</li>`);
+       });
       });
 
       socket.on("chatmessage", function (data) {
-        console.log(data);
         //customize-> make line break, clear input
         let otherMsg = document.getElementById("messages");
         let newOtherMsg = document.createElement("p");
@@ -193,12 +175,14 @@
       });
 
       var sendmessage = function (message) {
-        console.log("chatmessage: " + message);
-        socket.emit("chatmessage", message);
+        formattedMsg = "<b><%= session.username %>:</b> " + message
+        console.log(formattedMsg)
+
+        socket.emit("chatmessage", formattedMsg);
         //customize-> make line break, clear input
         let myMsg = document.getElementById("messages");
         let newMyMsg = document.createElement("p");
-        newMyMsg.innerHTML = `${message}`;
+        newMyMsg.innerHTML = `<b><%= session.username %>:</b> ${message}`;
         newMyMsg.classList.add("newMyMsg");
         myMsg.appendChild(newMyMsg);
         document.getElementById("message").value = ` `;
@@ -209,7 +193,16 @@
           0
         );
       };
+    
+      let msgButton = document.getElementById("msgBtn");
+      msgButton = addEventListener("keyup", (event)=>{
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          document.getElementById("msgButton").click();
+      }
+      })
+
+
     </script>
-    <script src="./js/networklistener.js"></script>
   </body>
 </html>
